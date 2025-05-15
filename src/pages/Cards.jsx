@@ -24,7 +24,7 @@ function addDepositTransaction(cardId, amount, note) {
   localStorage.setItem(TX_KEY, JSON.stringify(txs));
 }
 
-function detectCardType(number) {
+
 function detectCardType(number) {
   if (/^4[0-9]{12,15}$/.test(number)) return 'Visa';
   if (/^5[1-5][0-9]{14}$|^2(2[2-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[01][0-9]{13}|720[0-9]{12})$/.test(number)) return 'MasterCard';
