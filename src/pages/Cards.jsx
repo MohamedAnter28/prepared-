@@ -25,34 +25,30 @@ function addDepositTransaction(cardId, amount, note) {
 }
 
 function detectCardType(number) {
-  if (/^4[0-9]{0,15}$/.test(number)) return 'Visa';
-  if (
-    /^(5[1-5][0-9]{0,14}|2(2[2-9][0-9]{0,12}|2[3-9][0-9]{0,13}|[3-6][0-9]{0,14}|7[01][0-9]{0,13}|720[0-9]{0,12}))$/.test(
-      number
-    )
-  )
-    return 'MasterCard';
+function detectCardType(number) {
+  if (/^4[0-9]{12,15}$/.test(number)) return 'Visa';
+  if (/^5[1-5][0-9]{14}$|^2(2[2-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[01][0-9]{13}|720[0-9]{12})$/.test(number)) return 'MasterCard';
+  if (/^3[47][0-9]{13}$/.test(number)) return 'American Express';
+  if (/^6(?:011|5[0-9]{2})[0-9]{12}$/.test(number)) return 'Discover';
+  if (/^35(2[89]|[3-8][0-9])[0-9]{12}$/.test(number)) return 'JCB';
+  if (/^(5018|5020|5038|6304|6759|6761|6763)[0-9]{8,15}$/.test(number)) return 'MEZA';
   return 'Unknown';
 }
 
 function getCardLogo(type) {
   if (type === 'Visa')
-    return (
-      <span className="inline-block align-middle text-blue-600 text-lg font-bold">
-        VISA
-      </span>
-    );
+    return <span className="text-blue-600 font-bold">VISA</span>;
   if (type === 'MasterCard')
-    return (
-      <span className="inline-block align-middle text-yellow-500 text-lg font-bold">
-        MC
-      </span>
-    );
-  return (
-    <span className="inline-block align-middle text-gray-400 text-lg font-bold">
-      ?
-    </span>
-  );
+    return <span className="text-yellow-500 font-bold">MC</span>;
+  if (type === 'American Express')
+    return <span className="text-indigo-600 font-bold">AMEX</span>;
+  if (type === 'Discover')
+    return <span className="text-orange-500 font-bold">DISC</span>;
+  if (type === 'JCB')
+    return <span className="text-green-500 font-bold">JCB</span>;
+  if (type === 'Maestro')
+    return <span className="text-red-600 font-bold">MEZA</span>;
+  return <span className="text-gray-400 font-bold">?</span>;
 }
 
 function getCardMonthlySpending(cardId) {
